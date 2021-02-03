@@ -60,6 +60,39 @@ A `distributed`, `in-memory` `key–value` database
 3. Support backup: `master-slave model`
 
 
+### Install
 
+1. check if you have gcc
 
- 
+2. run commands below
+```
+wget https://download.redis.io/releases/redis-6.0.10.tar.gz
+tar xzf redis-6.0.10.tar.gz
+cd redis-6.0.10
+make
+make install
+```
+
+#### start redis
+```
+cd usr/local/bin
+redis-server
+```
+
+#### check running redis server
+```
+ps -ef|grep redis
+```
+
+#### connect to redis server
+```
+[ec2-user@ip-172-31-33-9 myRedis]$ redis-cli -p 6379
+Could not connect to Redis at 127.0.0.1:6379: Connection refused
+not connected> ping
+Could not connect to Redis at 127.0.0.1:6379: Connection refused
+not connected> exit
+[ec2-user@ip-172-31-33-9 myRedis]$ redis-cli -p 6379
+127.0.0.1:6379> ping
+PONG
+
+```
