@@ -86,22 +86,70 @@ ps -ef|grep redis
 
 #### connect to redis server
 ```
-[ec2-user@ip-172-31-33-9 myRedis]$ redis-cli -p 6379
-Could not connect to Redis at 127.0.0.1:6379: Connection refused
-not connected> ping
-Could not connect to Redis at 127.0.0.1:6379: Connection refused
-not connected> exit
-[ec2-user@ip-172-31-33-9 myRedis]$ redis-cli -p 6379
+[ec2-user@ip-172-31-33-9 ~]$ redis-cli -p 6379
+
 127.0.0.1:6379> ping
 PONG
+
+127.0.0.1:6379> SHUTDOWN
+
+not connected> exit
 ```
+
+### kill redis mandatorily
+```
+pkill -9 redis
+```
+
 
 ### other knowledge
 
 ![binFolder.jpg](/images/binFolder.jpg/)
 
-#### redis-benchmark
+#### see redis performance
 
+There is a`redis-benchmark` file under usr/local/bin, we can run it to see the performance of redis on our machine
+
+```
+====== PING_INLINE ======
+  100000 requests completed in 2.16 seconds
+  50 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+99.90% <= 1 milliseconds
+100.00% <= 1 milliseconds
+46210.72 requests per second
+
+====== PING_BULK ======
+  100000 requests completed in 2.19 seconds
+  50 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+99.84% <= 1 milliseconds
+100.00% <= 1 milliseconds
+45745.65 requests per second
+
+====== SET ======
+  100000 requests completed in 2.23 seconds
+  50 parallel clients
+  3 bytes payload
+  keep alive: 1
+
+98.15% <= 1 milliseconds
+99.94% <= 2 milliseconds
+99.94% <= 3 milliseconds
+99.94% <= 4 milliseconds
+99.95% <= 5 milliseconds
+100.00% <= 5 milliseconds
+44802.86 requests per second
+
+====== GET ======
+.
+.
+.
+```
 
 
 
