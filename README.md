@@ -151,5 +151,56 @@ There is a`redis-benchmark` file under usr/local/bin, we can run it to see the p
 .
 ```
 
+#### redis uses a single thread
+
+Redis is, mostly, `a single-threaded server` from the POV of commands execution (actually modern versions of Redis use threads for different things). 
+
+It is not designed to benefit from multiple CPU cores. People are supposed to launch several Redis instances to scale out on several cores if needed
+
+#### redis default has 16 databases
+
+```
+[ec2-user@ip-172-31-33-9 redis-3.0.4]$ vim myRedis/redis.conf
+
+# Set the number of databases. The default database is DB 0, you can select
+# a different one on a per-connection basis using SELECT <dbid> where
+# dbid is a number between 0 and 'databases'-1
+databases 16
+```
+
+#### Switch database using `select n`
+
+we can put different things in different DB
+
+```
+127.0.0.1:6379> select 15
+OK
+127.0.0.1:6379[15]>  # now we are using database 16
+```
+
+#### dbsize: size of data in current DB
+
+```
+127.0.0.1:6379[1]> dbsize
+(integer) 0
+
+127.0.0.1:6379[1]> set "k1" "Hello"
+OK
+
+127.0.0.1:6379[1]> dbsize
+(integer) 1
+```
+
+#### flushdb: clear current dbid
+
+#### flushAll: clear all DB
+
+#### index in redis starts from 0
+
+#### default port is 6379
+
+
+
+
 
 
