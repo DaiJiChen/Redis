@@ -94,5 +94,14 @@ not connected> exit
 [ec2-user@ip-172-31-33-9 myRedis]$ redis-cli -p 6379
 127.0.0.1:6379> ping
 PONG
-
 ```
+
+### other knowledge
+
+![binFolder.jpg](/images/binFolder.jpg/)
+
+#### redis-benchmark
+
+
+
+
