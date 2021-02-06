@@ -228,6 +228,137 @@ Ablve 5 is common used data type
 8. `Streams`: append-only collections of map-like entries that provide an abstract log data type. They are covered in depth in the Introduction to Redis Streams.
 
 
+### key
 
+`keys *` return all keys in this DB
+
+`exists key` check if a key exists
+
+`move key db` move a key to a certain db`
+
+`expire key seconds` set the expire time of a key
+
+`ttl key` get the expire time of a key
+
+`type key` type of value of a key
+
+`del key` delete a key
+
+```
+127.0.0.1:6379[1]> keys *
+1) "k2"
+2) "k3"
+3) "k1"
+
+127.0.0.1:6379[1]> exists k1
+(integer) 1
+
+127.0.0.1:6379[1]> move k1 2
+(integer) 1
+
+127.0.0.1:6379[1]> keys *
+1) "k2"
+2) "k3"
+
+127.0.0.1:6379[1]> expire k2 60
+(integer) 1
+
+
+127.0.0.1:6379[1]> ttl k2
+(integer) 48
+
+127.0.0.1:6379[1]> ttl k3
+(integer) -1
+
+127.0.0.1:6379[1]> ttl k2
+(integer) -2
+
+127.0.0.1:6379[1]> keys *
+1) "k3"
+
+
+127.0.0.1:6379[1]> type k3
+string
+```
+
+
+### String type
+
+`set` `get` `del` `append` `strlen` 
+
+Used on number string: `incr key` `decr key` `incrby key N` `decrby key N`
+
+Get substring of key: `getrange` `setrange` (inclusive in both left and right)
+
+`setex`: set with expire time
+
+`setnx`: set if not exist
+
+`mset` `mget` `msetnx`: multiple set, multiple get
+
+```
+127.0.0.1:6379[1]> get k3
+"v3"
+
+127.0.0.1:6379[1]> append k3 12345
+(integer) 7
+
+127.0.0.1:6379[1]> get k3
+"v312345"
+
+127.0.0.1:6379[1]> strlen k3
+(integer) 7
+```
+
+```
+127.0.0.1:6379[1]> set k4 0
+OK
+
+127.0.0.1:6379[1]> incr k4
+(integer) 1
+
+127.0.0.1:6379[1]> get k4
+"1"
+```
+
+```
+127.0.0.1:6379[1]> getrange k3 0 3
+"v312"
+
+127.0.0.1:6379[1]> setrange k3 0 xxx
+(integer) 7
+
+127.0.0.1:6379[1]> get k3
+"xxx2345"
+```
+
+```
+127.0.0.1:6379[1]> setex k5 10 v5
+OK
+
+127.0.0.1:6379[1]> ttl k5
+(integer) 5
+
+127.0.0.1:6379[1]> setnx k3 v3  # failed
+(integer) 0
+
+127.0.0.1:6379[1]> get k3
+"xxx2345" # value didn't change
+
+127.0.0.1:6379[1]> setnx k6 v6 # succeed
+(integer) 1
+
+127.0.0.1:6379[1]> get k6
+"v6"
+```
+
+```
+127.0.0.1:6379[1]> mset k1 v1 k2 v2
+OK
+
+127.0.0.1:6379[1]> mget k1 k2
+1) "v1"
+2) "v2"
+```
 
 
