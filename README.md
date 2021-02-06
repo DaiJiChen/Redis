@@ -361,4 +361,99 @@ OK
 2) "v2"
 ```
 
+### list 
 
+single key multiple value
+
+if there is no value, key will also be deleted
+
+linkelist, manipunate in head or tail is efficient
+
+`lpush` `rpush` `lrange` : left push, right push, get data in range
+
+`lpop` `rpop`: pop the left element, pop the right element
+
+`lindex`: get elements according to index from left (redis index start from 0)
+
+`llen`: get list length
+
+`lrem value N` : delete a certain value for N times
+
+`ltrim key N N`: only reserve values from N1 to N2
+
+`rpoplpush list1 list2`: rpop a element from list1 and lpush to list2
+
+`linsert key before/after value value`: insert a value before/ater certain value
+
+```
+127.0.0.1:6379[1]> LPUSH list1 1 2 3 4 5
+(integer) 5
+
+127.0.0.1:6379[1]> LRANGE list1 0 -1
+1) "5"
+2) "4"
+3) "3"
+4) "2"
+5) "1"
+
+127.0.0.1:6379[1]> lpop list1
+"5"
+
+127.0.0.1:6379[1]> rpop list1
+"1"
+
+127.0.0.1:6379[1]> RPUSH list2 1 2 3 4 5
+(integer) 5
+
+127.0.0.1:6379[1]> LRANGE list2 0 -1
+1) "1"
+2) "2"
+3) "3"
+4) "4"
+5) "5"
+```
+
+```
+127.0.0.1:6379[1]> lpush l3 1 2 3 4 5
+(integer) 5
+
+127.0.0.1:6379[1]> ltrim l3 0 2
+OK
+
+127.0.0.1:6379[1]> lrange l3 0 -1
+1) "5"
+2) "4"
+3) "3"
+```
+
+```
+127.0.0.1:6379[1]> lrange l3 0 -1
+1) "5"
+2) "4"
+3) "3"
+
+127.0.0.1:6379[1]> linsert l3 before 4 java
+(integer) 4
+
+127.0.0.1:6379[1]> lrange l3 0 -1
+1) "5"
+2) "java"
+3) "4"
+4) "3"
+```
+
+### Set
+
+`sadd` `smumbers` `sismumbers`
+
+
+
+```
+127.0.0.1:6379[1]> sadd set1 1 1 2 2 3 3
+(integer) 3
+
+127.0.0.1:6379[1]> smembers set1
+1) "1"
+2) "2"
+3) "3"
+```
