@@ -85,6 +85,11 @@ redis-server
 #### check running redis server
 ```
 ps -ef|grep redis
+
+# ps: process status
+# -e: every process
+# -f: full output format
+
 ```
 
 #### connect to redis server
@@ -379,7 +384,7 @@ linkelist, manipunate in head or tail is efficient
 
 `lrem value N` : delete a certain value for N times
 
-`ltrim key N N`: only reserve values from N1 to N2
+`ltrim key N1 N2`: only reserve values from N1 to N2
 
 `rpoplpush list1 list2`: rpop a element from list1 and lpush to list2
 
@@ -444,8 +449,14 @@ OK
 
 ### Set
 
-`sadd` `smumbers` `sismumbers`
+`sadd` `smumbers` `sismumber`: add element, get all numbers, check if a value exist
+`scard`: get set size
+`srem key value` delete 
+`srandmember key`: select several item randomly
+`spop key` pop one item randomly
+`smove key1 key2`
 
+`sdiff` `sinter` `sunion`
 
 
 ```
@@ -456,4 +467,45 @@ OK
 1) "1"
 2) "2"
 3) "3"
+
+127.0.0.1:6379[1]> sismember set1 1
+(integer) 1
+
+127.0.0.1:6379[1]> sismember set1 4
+(integer) 0
+
+127.0.0.1:6379[1]> scard set1
+(integer) 3
+
+127.0.0.1:6379[1]> srem set1 3
+(integer) 1
+127.0.0.1:6379[1]> smembers set1
+1) "1"
+2) "2"
+
+127.0.0.1:6379[1]> sadd set2 1 2 3 4 5 6 7 8
+(integer) 8
+127.0.0.1:6379[1]> srandmember set2 3
+1) "5"
+2) "4"
+3) "3"
+127.0.0.1:6379[1]> srandmember set2 3
+1) "5"
+2) "6"
+3) "4"
+
+127.0.0.1:6379[1]> spop set2
+"2"
+127.0.0.1:6379[1]> spop set2
+"5"
+
+127.0.0.1:6379[1]> smove set1 set2 4
+(integer) 0
+127.0.0.1:6379[1]> smembers set2
+1) "1"
+2) "3"
+3) "4"
+4) "6"
+5) "7"
+6) "8"
 ```
