@@ -509,3 +509,58 @@ OK
 5) "7"
 6) "8"
 ```
+
+
+### Hash
+
+`hset` `hget` `hmset` `hmget`  `hgetall` `hdel`
+`hlen`
+`hexist key`
+`hkeys` `hvals`
+`hincrby` `hincrbyfloat`
+`hsetnx`: set if not exist
+
+```
+127.0.0.1:6379> hset user id 11
+(integer) 1
+
+127.0.0.1:6379> hget user id
+"11"
+
+127.0.0.1:6379> hmset user name jichen age 25
+OK
+
+127.0.0.1:6379> hmget user name id age
+1) "jichen"
+2) "11"
+3) "25"
+
+127.0.0.1:6379> hgetall user
+1) "id"
+2) "11"
+3) "name"
+4) "jichen"
+5) "age"
+6) "25"
+
+127.0.0.1:6379> hdel user name
+(integer) 1
+
+127.0.0.1:6379> hlen user
+(integer) 2
+
+127.0.0.1:6379> hexists user age
+(integer) 1
+
+127.0.0.1:6379> hkeys user
+1) "id"
+2) "age"
+
+127.0.0.1:6379> hvals user
+1) "11"
+2) "25"
+
+127.0.0.1:6379> hincrby user age 3
+(integer) 28
+```
+
