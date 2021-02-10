@@ -564,3 +564,104 @@ OK
 (integer) 28
 ```
 
+### ZSet
+
+- set: k1 v1 v2
+- Zset: k1 score1 v1 svore2 v2
+
+#### commands
+
+`zadd` 
+`zrange`
+`zrangebyscore`
+	- no parameter: left include, right include
+	- `(` : not include
+	- withscores: print score
+	- limit n1 n2: start from index n1, only return n2 records
+`zremkey` 
+`zcard`: return size
+`zcount key score1 score2` 
+`zrank key value` get rank of a certain value
+`zscore key value` get score of a certain value
+`zrevrange`
+`zrevrangebyscore`
+
+```
+127.0.0.1:6379> zadd zset1 60 v1 70 v2 80 v3 90 v4
+(integer) 4
+
+127.0.0.1:6379> zrange zset1 0 -1
+1) "v1"
+2) "v2"
+3) "v3"
+4) "v4"
+
+127.0.0.1:6379> zrange zset1 0 -1 withscores
+1) "v1"
+2) "60"
+3) "v2"
+4) "70"
+5) "v3"
+6) "80"
+7) "v4"
+8) "90"
+```
+
+```
+127.0.0.1:6379> zrangebyscore zset1 60 80
+1) "v1"
+2) "v2"
+3) "v3"
+
+127.0.0.1:6379> zrangebyscore zset1 (60 (80
+1) "v2"
+
+127.0.0.1:6379> zrangebyscore zset1 60 80 withscores
+1) "v1"
+2) "60"
+3) "v2"
+4) "70"
+5) "v3"
+6) "80"
+
+127.0.0.1:6379> zrangebyscore zset1 60 80 limit 0 2
+1) "v1"
+2) "v2"
+```
+
+```
+127.0.0.1:6379> zrem zset1 v4
+(integer) 1
+
+127.0.0.1:6379> zcard set01
+(integer) 0
+
+127.0.0.1:6379> zcount zset1 60 80
+(integer) 3
+
+127.0.0.1:6379> zrank zset1 v1
+(integer) 0
+
+127.0.0.1:6379> zscore zset1 v1
+"60"
+```
+
+```
+127.0.0.1:6379> zrange zset1 0 -1
+1) "v1"
+2) "v2"
+3) "v3"
+
+127.0.0.1:6379> zrevrange zset1 0 -1
+1) "v3"
+2) "v2"
+3) "v1"
+
+127.0.0.1:6379> zrangebyscore zset1 60 70
+1) "v1"
+2) "v2"
+
+127.0.0.1:6379> zrevrangebyscore zset1 70 60
+1) "v2"
+2) "v1"
+```
