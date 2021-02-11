@@ -450,10 +450,15 @@ OK
 ### Set
 
 `sadd` `smumbers` `sismumber`: add element, get all numbers, check if a value exist
+
 `scard`: get set size
+
 `srem key value` delete 
+
 `srandmember key`: select several item randomly
+
 `spop key` pop one item randomly
+
 `smove key1 key2`
 
 `sdiff` `sinter` `sunion`
@@ -514,10 +519,15 @@ OK
 ### Hash
 
 `hset` `hget` `hmset` `hmget`  `hgetall` `hdel`
+
 `hlen`
+
 `hexist key`
+
 `hkeys` `hvals`
+
 `hincrby` `hincrbyfloat`
+
 `hsetnx`: set if not exist
 
 ```
@@ -567,23 +577,34 @@ OK
 ### ZSet
 
 - set: k1 v1 v2
+
 - Zset: k1 score1 v1 svore2 v2
 
 #### commands
 
 `zadd` 
+
 `zrange`
+
 `zrangebyscore`
+
 	- no parameter: left include, right include
 	- `(` : not include
 	- withscores: print score
 	- limit n1 n2: start from index n1, only return n2 records
+	
 `zremkey` 
+
 `zcard`: return size
+
 `zcount key score1 score2` 
+
 `zrank key value` get rank of a certain value
+
 `zscore key value` get score of a certain value
+
 `zrevrange`
+
 `zrevrangebyscore`
 
 ```
