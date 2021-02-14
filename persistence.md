@@ -75,6 +75,80 @@ move your backuped dump.rdb (ususally in other palce or another machine) to the 
 
 ## AOF(Append Only File)
 
+log all the write commands to a file. When reconstruction, redis will read and execute loged commands one by one.
 
+### aof file: appendonly.aof
+
+### redis.conf -> APPEND ONLD MODE
+
+```
+############################## APPEND ONLY MODE ###############################
+
+# By default Redis asynchronously dumps the dataset on disk. This mode is
+# good enough in many applications, but an issue with the Redis process or
+# a power outage may result into a few minutes of writes lost (depending on
+# the configured save points).
+#
+# The Append Only File is an alternative persistence mode that provides
+# much better durability. For instance using the default data fsync policy
+# (see later in the config file) Redis can lose just one second of writes in a
+# dramatic event like a server power outage, or a single write if something
+# wrong with the Redis process itself happens, but the operating system is
+# still running correctly.
+#
+# AOF and RDB persistence can be enabled at the same time without problems.
+# If the AOF is enabled on startup Redis will load the AOF, that is the file
+# with the better durability guarantees.
+#
+# Please check http://redis.io/topics/persistence for more information.
+
+appendonly no
+```
+
+### Three different synchronize stratege
+
+```
+# appendfsync always
+appendfsync everysec
+# appendfsync no
+```
+
+### when start redis, it will first read appendonly.aof. It there is no appendonly.aof, it will read dump.rdb
+
+### rewrite, use command `bgrewriteaof`
+
+When to rewrite: when the size of current AOF file is 2 times larger than the size after last rewrite and size > 64M
+
+```
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+```
+
+fork(): a new process is forked to do rewrite
+
+### advantage: can sync very frequently ( always, everysec)
+
+### disadvantage: aof file is larger, and recovery is much slower.
 
 ## Trade Off
+
+**Official document**
+
+```
+The general indication is that you should use both persistence methods if you want a degree of data safety 
+comparable to what PostgreSQL can provide you.
+```
+```
+If you care a lot about your data, but still can live with a few minutes 
+of data loss in case of disasters, you can simply use RDB alone.
+```
+```
+There are many users using AOF alone, but we discourage it since to have an RDB snapshot 
+from time to time is a great idea for doing database backups, for faster restarts,
+and in the event of bugs in the AOF engine.
+```
+```
+Note: for all these reasons we'll likely end up unifying AOF and RDB into 
+a single persistence model in the future (long term plan).
+```
+
