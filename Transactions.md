@@ -1,4 +1,4 @@
-# Transaction
+# Redis Transaction
 
 A group of commands to be executed in a single isolated operation.
 
