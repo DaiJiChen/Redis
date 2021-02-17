@@ -17,6 +17,9 @@ https://redis.io/topics/replication
 ```
 127.0.0.1:6380> slaveof 127.0.0.1 6379
 OK
+
+127.0.0.1:6380> slaveof no one
+OK
 ```
 
 ### you cannot write on a slave
@@ -26,6 +29,11 @@ OK
 (error) READONLY You can't write against a read only slave.
 ```
 
+### Three common strategy
+
+1. One master, two slaves
+2. master -> slave1 -> slave2 -> slave3
+3. Sentinel
 
 ### Situation#1: If the master SHUTDOWN, slave won't change their role automatically. Slave will wait for the master until master recovered.
 
@@ -104,7 +112,7 @@ As we can see, slaves also changed, they are still slaves of the master.
 3) "k2"
 ```
 
-### Situation#2: If a slave SHUTDOWN, master and other slaves won't be influenced. This slave is no longer a slave after reboot unless you configure it in redis.conf
+### Situation#2: If a slave SHUTDOWN, master and other slaves won't be influenced. This slave is no longer a slave after reboot unless you configure it in redis.conf -> REPLICATION: `slaveof <masterip> <masterport>`
 
 First, we shutdown a slave
 
@@ -143,3 +151,4 @@ repl_backlog_size:1048576
 repl_backlog_first_byte_offset:0
 repl_backlog_histlen:0
 ```
+
