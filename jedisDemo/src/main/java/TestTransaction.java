@@ -1,7 +1,7 @@
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Transaction;
 
-public class testTransaction {
+public class TestTransaction {
 
     public boolean transMethod() {
         Jedis jedis = new Jedis("127.0.0.1", 6379);
@@ -38,7 +38,7 @@ public class testTransaction {
      * 如果在此期间键balance被其它人修改， 那在提交事务（执行exec）时就会报错， 程序中通常可以捕获这类错误再重新执行一次，直到成功。
      */
     public static void main(String[] args) {
-        testTransaction test = new testTransaction();
+        TestTransaction test = new TestTransaction();
         boolean retValue = test.transMethod();
         System.out.println("main retValue-------: " + retValue);
     }

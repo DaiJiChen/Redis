@@ -1,7 +1,7 @@
 import java.util.*;
 import redis.clients.jedis.Jedis;
 
-public class testAPI {
+public class TestAPI {
     public static void main(String[] args)
     {
 
